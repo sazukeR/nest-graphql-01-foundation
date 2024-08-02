@@ -11,8 +11,15 @@ export class TodoService {
     { id: 3, description: 'tarea 3', done: false },
   ];
 
-  create(createTodoDto: CreateTodoDto) {
-    return 'This action adds a new todo';
+  create(createTodoDto: CreateTodoDto): Todo {
+    const todo = new Todo();
+
+    todo.id = Math.max(...this.todos.map((todo) => todo.id), 0) + 1;
+    todo.description = createTodoDto.description;
+    todo.done = false;
+    this.todos.push(todo);
+
+    return todo;
   }
 
   findAll(): Todo[] {
